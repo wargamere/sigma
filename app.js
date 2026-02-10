@@ -230,57 +230,129 @@ els.mute.onclick = () => {
 // --- BROWSER APP ---
 const Pages = {
     'local://home': `
-        <h1>Welcome to Intranet</h1>
-        <p>System status: CRITICAL.</p>
-        <p>Recovery data has been fragmented across the secure partition.</p>
-        <p><strong>Mission:</strong> Locate missing hash fragments, recombine them, and restore system access.</p>
+        <h1>🚀 Intranet Portal</h1>
+        <div class="news-feed">
+            <h3>📢 Company Announcements</h3>
+            <p><strong>IT Alert:</strong> The printer on 3rd floor is ON FIRE. Do not use.</p>
+            <p><strong>HR Update:</strong> "Casual Fridays" are suspended until morale improves.</p>
+            <p><strong>Security Warning:</strong> Phishing attempts are up 300%. If an email asks for your soul, do not reply.</p>
+        </div>
         <hr>
-        <h3>Updates</h3>
-        <p>Admin: Please stop leaving half-keys in the build logs. It's a security risk.</p>
+        <h3>My Tickets</h3>
+        <ul>
+            <li>[OPEN] Reset password for user 'admin' (Ticket #992)</li>
+            <li>[CLOSED] Install 'Doom' on server (Ticket #666) - REJECTED</li>
+        </ul>
+        <p><em>System Status: <span style="color:red">CRITICAL FAILURE</span></em></p>
     `,
     'local://project-alpha': `
-        <h1>Project Alpha</h1>
-        <p>Status: Deprecated.</p>
-        <p>Codebase moved to legacy storage.</p>
-        <p>To reference build v4.2, use checksum: <span class="hash-fragment" style="font-family: monospace; color: #555;">(${CONFIG.HALF_A})</span></p>
-        <p>Note: Ensure you verify integrity before deploying.</p>
+        <h1>🗂 Project Repository</h1>
+        <p>Index of active and archived work streams.</p>
+        
+        <details>
+            <summary>📂 <strong>Project Beta (Active)</strong></summary>
+            <p>Status: On Track</p>
+            <p>Developing next-gen AI that refuses to open pod bay doors. Beta testing phase.</p>
+        </details>
+
+        <details>
+            <summary>📂 <strong>Project Gamma (Planning)</strong></summary>
+            <p>Status: Ideation</p>
+            <p>Blockchain-based toaster. Funding pending.</p>
+        </details>
+
+        <details>
+            <summary>📂 <strong>Project Alpha (DEPRECATED)</strong></summary>
+            <div style="border: 1px solid #555; padding: 10px; background: #111;">
+                <p><strong>⚠ ARCHIVED ⚠</strong></p>
+                <p>This codebase has been moved to cold storage.</p>
+                <details>
+                    <summary>View Technical Specs</summary>
+                    <p>Architecture: Monolithic</p>
+                    <p>Legacy Compiler: v1.0.2</p>
+                </details>
+                <details>
+                    <summary>View Build Artifacts</summary>
+                    <p>Build 2024-01-15: FAILED</p>
+                    <p>Build 2024-01-14: SUCCESS</p>
+                    <p style="font-size: 0.8em; color: #666;">
+                        Manifest Checksum: 
+                        <span class="hash-fragment" style="font-family: monospace; color: #444;">${CONFIG.HALF_A}</span>
+                    </p>
+                </details>
+            </div>
+        </details>
     `,
     'local://hash-tool': `
         <div class="hash-tool-container">
-            <h1>Cryptographic Decoder</h1>
-            <p>Enter full hash string to decrypt.</p>
-            <input type="text" id="hash-tool-input" class="hash-input" placeholder="Paste full hash here...">
-            <button id="hash-tool-btn" class="primary-btn">DECODE</button>
+            <h1>🔐 Cryptographic Decoder</h1>
+            <p>Secure terminal for hash verification.</p>
+            <input type="text" id="hash-tool-input" class="hash-input" placeholder="Paste composed hash key...">
+            <button id="hash-tool-btn" class="primary-btn">INITIALIZE DECODE</button>
             <div class="progress-bar"><div class="progress-bar-fill"></div></div>
             <div class="log-output"></div>
         </div>
     `,
-    'local://dev-log': `
-        <h1>Developer Log</h1>
-        <p>Entry 404: Sleep deprivation kicking in. I hid the other half of the key in the About page alt-text, but then I realized we don't have an About page.</p>
-        <p>Moved it to the System Administration page footer. Don't tell Dave.</p>
+    'local://hr-portal': `
+        <h1>👔 Human Resources</h1>
+        <p>Welcome, Employee #42.</p>
+        <details>
+            <summary>Employee Handbook</summary>
+            <p>Rule 1: The beatings will continue until morale improves.</p>
+            <p>Rule 2: No fish in the microwave.</p>
+        </details>
+        <details>
+            <summary>Holiday Calendar</summary>
+            <p>Next holiday: 2029 (tentative).</p>
+        </details>
     `,
     'local://sys-admin': `
-        <h1>System Administration</h1>
-        <p>Authorized personnel only.</p>
+        <h1>⚙ System Administration</h1>
+        <p><strong>UNAUTHORIZED ACCESS IS A FELONY.</strong></p>
+        
         <details>
-            <summary>Server Config</summary>
-            <p>Port: 8080</p>
-            <p>Protocol: HTTPS</p>
+            <summary>Network Topology</summary>
+            <pre>
+[Gateway] <--> [Firewall] <--> [You]
+                |
+             [Server App]
+            </pre>
         </details>
+
         <details>
-            <summary>User Management</summary>
-            <p>Active Users: 1</p>
+            <summary>Live Server Logs</summary>
+            <div style="font-family: monospace; font-size: 10px; color: #0f0; background: #000; padding: 5px; height: 100px; overflow-y: scroll;">
+                [INFO] Daemon started<br>
+                [WARN] High memory usage in sector 7G<br>
+                [INFO] User 'guest' timed out<br>
+                [ERR] Kernel panic in module: verify.js<br>
+                [INFO] Garbage collection...<br>
+                [INFO] Build integrity check passed.<br>
+                [DEBUG] Loaded config.sys<br>
+                [DEBUG] Key Fragments loaded...<br>
+                [TRACE] Null pointer exception<br>
+                ...
+            </div>
         </details>
-        <div style="margin-top: 50px; border-top: 1px solid #eee; padding-top: 10px; color: #ccc; font-size: 10px;">
-            System Build ID: <span style="color: #bbb;">${CONFIG.HALF_B}</span>
-        </div>
+
+        <details>
+            <summary>Legacy Recovery</summary>
+            <p>Use in case of emergency only.</p>
+            <div style="margin-top: 10px; padding: 5px; border: 1px dashed red;">
+                <p><strong>System Override Key:</strong></p>
+                <p style="filter: blur(0.5px); color: #333;">ID: ${CONFIG.HALF_B}</p>
+            </div>
+        </details>
     `,
     'local://legacy-docs': `
-        <h1>Legacy Documentation</h1>
-        <p>Lorem ipsum dolor sit amet. NOT A REAL HASH: a1b2c3d4</p>
-        <p>Do not use old keys. They will fail validation.</p>
-        <code>HASH_OLD = 8822991100</code>
+        <h1>📚 Archive</h1>
+        <p>Old documentation. Most of this is wrong.</p>
+        <p>Search results for "Hash":</p>
+        <ul>
+            <li>Hash Browns (Cafeteria Menu)</li>
+            <li>#HashTag (Social Media Policy)</li>
+            <li>System Hash (v1.0) - <span style="text-decoration: line-through;">a1b2c3d4</span> (EXPIRED)</li>
+        </ul>
     `
 };
 
