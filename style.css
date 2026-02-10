@@ -320,7 +320,6 @@ body {
     flex: 1;
     padding: 40px;
     overflow-y: auto;
-    text-select: text;
     user-select: text;
 }
 
