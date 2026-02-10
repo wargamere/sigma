@@ -1,27 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sigma Vibecoding</title>
-    <style>
-        body {
-            background-color: #0f0f0f;
-            color: #ececec;
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        h1 {
-            font-size: 3rem;
-            text-align: center;
-        }
-    </style>
+    <title>Sigma OS // Restore Session</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    <h1>Vibecoding locked in 🔒</h1>
+    <div id="boot-sequence">
+        <div class="terminal-text">
+            <p>> KERNEL_INIT...</p>
+            <p>> MOUNTING VIRTUAL FILESYSTEM...</p>
+            <p>> ERROR: SECURITY HASH FRAGMENTATION DETECTED.</p>
+            <p>> LAUNCHING RECOVERY MODE...</p>
+        </div>
+    </div>
+
+    <div id="desktop" class="hidden">
+        <!-- TOP BAR -->
+        <div id="top-bar">
+            <div class="os-identity">
+                <span class="status-dot"></span>
+                <span class="os-name">SIGMA OS</span>
+                <span class="version">v4.0.4-RECOVERY</span>
+            </div>
+            <div class="system-tray">
+                <button id="mute-toggle" class="icon-btn" aria-label="Toggle Mute">
+                    🔊
+                </button>
+                <span id="clock">00:00</span>
+            </div>
+        </div>
+
+        <!-- WORKSPACE AREA -->
+        <div id="workspace">
+            <!-- APP WINDOWS -->
+
+            <!-- BROWSER -->
+            <div id="window-browser" class="window" data-app="browser">
+                <div class="title-bar">
+                    <div class="window-title">NetScape Navigator (Local)</div>
+                    <div class="window-controls">
+                        <button class="win-btn min">–</button>
+                        <button class="win-btn close">×</button>
+                    </div>
+                </div>
+                <div class="window-content">
+                    <div class="browser-chrome">
+                        <div class="nav-bar">
+                            <button class="nav-btn" disabled>←</button>
+                            <button class="nav-btn" disabled>→</button>
+                            <button class="nav-btn">↻</button>
+                            <input type="text" class="url-bar" value="local://index" readonly>
+                        </div>
+                    </div>
+                    <div class="browser-body">
+                        <aside class="sidebar">
+                            <ul class="bookmarks">
+                                <li data-url="local://home" class="active">Home</li>
+                                <li data-url="local://hash-tool">Hash Tool</li>
+                                <li data-url="local://project-alpha">Project Alpha</li>
+                                <li data-url="local://dev-log">Dev Log</li>
+                                <li data-url="local://legacy-docs">Legacy Docs</li>
+                                <li data-url="local://sys-admin">Sys Admin</li>
+                            </ul>
+                        </aside>
+                        <main id="browser-viewport">
+                            <!-- Injected by JS -->
+                        </main>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOTES -->
+            <div id="window-notes" class="window" data-app="notes">
+                <div class="title-bar">
+                    <div class="window-title">Notes</div>
+                    <div class="window-controls">
+                        <button class="win-btn min">–</button>
+                        <button class="win-btn close">×</button>
+                    </div>
+                </div>
+                <div class="window-content flex-col">
+                    <div class="notes-toolbar">
+                        <button id="notes-clear">Clear</button>
+                        <button id="notes-copy">Copy All</button>
+                    </div>
+                    <textarea id="notes-area" placeholder="Use this scratchpad to combine fragments..."></textarea>
+                </div>
+            </div>
+
+            <!-- VERIFY -->
+            <div id="window-verify" class="window" data-app="verify">
+                <div class="title-bar">
+                    <div class="window-title">System Verify</div>
+                    <div class="window-controls">
+                        <button class="win-btn min">–</button>
+                        <button class="win-btn close">×</button>
+                    </div>
+                </div>
+                <div class="window-content flex-center">
+                    <div class="verify-container">
+                        <h2>RECOVERY AUTHORIZATION</h2>
+                        <p>Enter the complete decoded protocol key to restore system integrity.</p>
+                        <div class="input-group">
+                            <input type="text" id="verify-input" placeholder="ENTER-CODE-HERE">
+                        </div>
+                        <button id="verify-btn" class="primary-btn">VERIFY IDENTITY</button>
+                        <div id="verify-msg"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TASKBAR -->
+        <div id="taskbar">
+            <button class="start-btn">
+                <div class="logo">∑</div>
+            </button>
+            <div class="task-apps">
+                <button class="app-icon" data-target="browser" title="Browser">
+                    🌐
+                </button>
+                <button class="app-icon" data-target="notes" title="Notes">
+                    📝
+                </button>
+                <button class="app-icon" data-target="verify" title="Verify">
+                    🔒
+                </button>
+            </div>
+            <div class="task-utility"></div>
+        </div>
+    </div>
+
+    <!-- MINIGAME OVERLAY -->
+    <div id="intrusion-overlay" class="hidden">
+        <div class="intrusion-warning">
+            <h1>⚠ INTRUSION DETECTED ⚠</h1>
+            <p>FIREWALL BREACH IN PROGRESS</p>
+            <div class="intrusion-stats">
+                DEFLECTED: <span id="defense-score">0</span> / <span id="defense-target">10</span>
+            </div>
+        </div>
+        <div id="defense-grid">
+            <!-- Circles spawned here -->
+        </div>
+    </div>
+
+    <!-- WIN OVERLAY -->
+    <div id="win-overlay" class="hidden">
+        <div class="win-modal">
+            <h1>ACCESS GRANTED</h1>
+            <p>System Integrity Restored.</p>
+            <div class="code-display">SIGMA-PROTOCOL-VERIFIED</div>
+            <button id="restart-btn" class="primary-btn">Reboot System</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
+
 </html>
