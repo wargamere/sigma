@@ -4,10 +4,16 @@
  */
 
 // --- CONFIG & CONSTANTS ---
+// --- CONFIG & CONSTANTS ---
+const generateHash = () =>
+    Array.from({ length: 32 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+
+const fullHash = generateHash();
+
 const CONFIG = {
-    FULL_HASH: "7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c",
-    HALF_A: "7f8a9b2c3d4e5f6a",
-    HALF_B: "1b2c3d4e5f6a7b8c",
+    FULL_HASH: fullHash,
+    HALF_A: fullHash.substring(0, 16),
+    HALF_B: fullHash.substring(16),
     DECODED_CODE: "SIGMA-PROTOCOL-INITIATED",
     MINIGAME: {
         TOTAL_CIRCLES: 10,
