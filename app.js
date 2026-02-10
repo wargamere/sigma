@@ -435,8 +435,25 @@ function triggerMinigame(onSuccess) {
         circle.classList.add('defense-circle');
 
         const size = Math.random() * (CONFIG.MINIGAME.CIRCLE_MAX_PX - CONFIG.MINIGAME.CIRCLE_MIN_PX) + CONFIG.MINIGAME.CIRCLE_MIN_PX;
-        const x = Math.random() * (window.innerWidth - size - 160) + 80;
-        const y = Math.random() * (window.innerHeight - size - 160) + 80;
+
+        // Increased padding to avoid edges (User reported top-left issue)
+        const marginX = Math.max(100, window.innerWidth * 0.15);
+        const marginY = Math.max(100, window.innerHeight * 0.15);
+
+        // Ensure we have enough space
+        const minX = marginX;
+        const maxX = window.innerWidth - marginX - size;
+        const minY = marginY;
+        const maxY = window.innerHeight - marginY - size;
+
+        // Fallback for small screens
+        const safeMinX = minX < maxX ? minX : 20;
+        const safeMaxX = minX < maxX ? maxX : window.innerWidth - 60;
+        const safeMinY = minY < maxY ? minY : 60;
+        const safeMaxY = minY < maxY ? maxY : window.innerHeight - 60;
+
+        const x = Math.random() * (safeMaxX - safeMinX) + safeMinX;
+        const y = Math.random() * (safeMaxY - safeMinY) + safeMinY;
 
         // Slower, easier TTL (2.5s - 3.5s)
         const ttl = Math.random() * (CONFIG.MINIGAME.TTL_MAX_MS - CONFIG.MINIGAME.TTL_MIN_MS) + CONFIG.MINIGAME.TTL_MIN_MS;
