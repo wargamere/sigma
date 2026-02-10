@@ -436,24 +436,17 @@ function triggerMinigame(onSuccess) {
 
         const size = Math.random() * (CONFIG.MINIGAME.CIRCLE_MAX_PX - CONFIG.MINIGAME.CIRCLE_MIN_PX) + CONFIG.MINIGAME.CIRCLE_MIN_PX;
 
-        // Increased padding to avoid edges (User reported top-left issue)
-        const marginX = Math.max(100, window.innerWidth * 0.15);
-        const marginY = Math.max(100, window.innerHeight * 0.15);
+        const size = Math.random() * (CONFIG.MINIGAME.CIRCLE_MAX_PX - CONFIG.MINIGAME.CIRCLE_MIN_PX) + CONFIG.MINIGAME.CIRCLE_MIN_PX;
 
-        // Ensure we have enough space
-        const minX = marginX;
-        const maxX = window.innerWidth - marginX - size;
-        const minY = marginY;
-        const maxY = window.innerHeight - marginY - size;
+        // Use simplified percentage-based positioning to guarantee no corner/edge spawns.
+        // Spawns between 15% and 80% of the screen dimensions.
+        const x = window.innerWidth * (0.15 + Math.random() * 0.65);
+        const y = window.innerHeight * (0.15 + Math.random() * 0.65);
 
-        // Fallback for small screens
-        const safeMinX = minX < maxX ? minX : 20;
-        const safeMaxX = minX < maxX ? maxX : window.innerWidth - 60;
-        const safeMinY = minY < maxY ? minY : 60;
-        const safeMaxY = minY < maxY ? maxY : window.innerHeight - 60;
-
-        const x = Math.random() * (safeMaxX - safeMinX) + safeMinX;
-        const y = Math.random() * (safeMaxY - safeMinY) + safeMinY;
+        circle.style.width = `${size}px`;
+        circle.style.height = `${size}px`;
+        circle.style.left = `${x}px`;
+        circle.style.top = `${y}px`;
 
         // Slower, easier TTL (2.5s - 3.5s)
         const ttl = Math.random() * (CONFIG.MINIGAME.TTL_MAX_MS - CONFIG.MINIGAME.TTL_MIN_MS) + CONFIG.MINIGAME.TTL_MIN_MS;
