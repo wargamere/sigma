@@ -32,14 +32,19 @@ const CONFIG = {
 // --- STATE ---
 const State = {
     apps: {
-        browser: { isOpen: true, zIndex: 10 },
-        notes: { isOpen: true, zIndex: 11 },
-        verify: { isOpen: true, zIndex: 12 }
+        browser: { isOpen: false, zIndex: 10 },
+        notes: { isOpen: false, zIndex: 11 },
+        verify: { isOpen: false, zIndex: 12 }
     },
     zIndexCounter: 20,
     hasBeenHacked: false, // Track if player has beaten the minigame once
     minigameActive: false
 };
+
+// ... (rest of file) ...
+
+// Initialize Windows Active State
+// document.querySelectorAll('.app-icon').forEach(i => i.classList.add('active'));
 
 // --- DOM ELEMENTS ---
 const els = {
@@ -602,4 +607,5 @@ els.verify.btn.onclick = () => {
 els.win.restart.onclick = () => location.reload();
 
 // Initialize Windows Active State
-document.querySelectorAll('.app-icon').forEach(i => i.classList.add('active'));
+// All windows closed by default.
+
