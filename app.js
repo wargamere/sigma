@@ -380,59 +380,81 @@ function triggerMinigame(onSuccess) {
     State.minigameActive = true;
     els.minigame.overlay.classList.remove('hidden');
     els.minigame.grid.innerHTML = '';
-    let deflected = 0;
-    els.minigame.score.innerText = deflected;
+
+    // Countdown Overlay Logic
+    let countdown = 5;
+    const warningTitle = document.querySelector('.intrusion-warning h1');
+    const originalTitle = "⚠ INTRUSION DETECTED ⚠";
+    const warningText = document.querySelector('.intrusion-warning p');
+    const originalText = "FIREWALL BREACH IN PROGRESS";
+
+    warningTitle.innerText = `BREACH IN ${countdown}...`;
+    warningText.innerText = "PREPARE DEFENSES";
+    els.minigame.score.innerText = "0";
     els.minigame.target.innerText = CONFIG.MINIGAME.TOTAL_CIRCLES;
+
     Sounds.alert();
 
-    let spawned = 0;
+    const countInterval = setInterval(() => {
+        countdown--;
+        if (countdown > 0) {
+            warningTitle.innerText = `BREACH IN ${countdown}...`;
+            Sounds.click(); // Little tick sound
+        } else {
+            clearInterval(countInterval);
+            warningTitle.innerText = originalTitle;
+            warningText.innerText = originalText;
+            startGame();
+        }
+    }, 1000);
+
     let failed = false;
 
-    const spawnLoop = setInterval(() => {
-        if (failed || spawned >= CONFIG.MINIGAME.TOTAL_CIRCLES) {
-            clearInterval(spawnLoop);
+    function startGame() {
+        let deflected = 0;
+        els.minigame.score.innerText = deflected;
+
+        spawnNextCircle(deflected);
+    }
+
+    function spawnNextCircle(completedCount) {
+        if (failed) return;
+
+        if (completedCount >= CONFIG.MINIGAME.TOTAL_CIRCLES) {
+            winMinigame();
             return;
         }
 
-        spawnCircle();
-        spawned++;
-
-    }, Math.random() * (CONFIG.MINIGAME.SPAWN_MAX_MS - CONFIG.MINIGAME.SPAWN_MIN_MS) + CONFIG.MINIGAME.SPAWN_MIN_MS);
-
-    function spawnCircle() {
-        if (failed) return;
         const circle = document.createElement('div');
         circle.classList.add('defense-circle');
 
         const size = Math.random() * (CONFIG.MINIGAME.CIRCLE_MAX_PX - CONFIG.MINIGAME.CIRCLE_MIN_PX) + CONFIG.MINIGAME.CIRCLE_MIN_PX;
-        const x = Math.random() * (window.innerWidth - size - 160) + 80; // Padding
+        const x = Math.random() * (window.innerWidth - size - 160) + 80;
         const y = Math.random() * (window.innerHeight - size - 160) + 80;
 
-        circle.style.width = `${size}px`;
-        circle.style.height = `${size}px`;
-        circle.style.left = `${x}px`;
-        circle.style.top = `${y}px`;
-
+        // Slower, easier TTL (2.5s - 3.5s)
         const ttl = Math.random() * (CONFIG.MINIGAME.TTL_MAX_MS - CONFIG.MINIGAME.TTL_MIN_MS) + CONFIG.MINIGAME.TTL_MIN_MS;
         circle.style.animationDuration = `${ttl}ms`;
 
-        // Click handler
+        let clicked = false;
+
         circle.onmousedown = (e) => {
             e.stopPropagation();
-            if (failed) return;
+            if (clicked || failed) return;
+            clicked = true;
             circle.remove();
-            deflected++;
-            els.minigame.score.innerText = deflected;
-            Sounds.click();
 
-            if (deflected >= CONFIG.MINIGAME.TOTAL_CIRCLES) {
-                winMinigame();
-            }
+            Sounds.click();
+            const newScore = completedCount + 1;
+            els.minigame.score.innerText = newScore;
+
+            // Spawn next one immediately after click (sequential)
+            setTimeout(() => spawnNextCircle(newScore), 200);
         };
 
-        // Timeout fail
+        // Fail logic
         setTimeout(() => {
-            if (circle.parentNode && !failed) {
+            if (!clicked && circle.parentNode && !failed) {
                 failMinigame();
             }
         }, ttl);
@@ -445,7 +467,7 @@ function triggerMinigame(onSuccess) {
         failed = true;
         Sounds.error();
         alert("SYSTEM COMPROMISED. REBOOTING...");
-        location.reload(); // Hard reset
+        location.reload();
     }
 
     function winMinigame() {
@@ -453,6 +475,9 @@ function triggerMinigame(onSuccess) {
         State.minigameActive = false;
         setTimeout(() => {
             els.minigame.overlay.classList.add('hidden');
+            // Reset text for next time
+            warningTitle.innerText = originalTitle;
+            warningText.innerText = originalText;
             onSuccess();
         }, 500);
     }
