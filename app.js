@@ -93,7 +93,7 @@ function playTone(freq, duration, type = 'sine') {
         gain.connect(audioCtx.destination);
         osc.start();
         osc.stop(audioCtx.currentTime + duration);
-    } catch(e) {}
+    } catch (e) { }
 }
 
 // --- BOOT SEQUENCE ---
@@ -114,7 +114,7 @@ function focusWindow(appId) {
     if (State.minigameActive) return;
     const w = document.getElementById(`window-${appId}`);
     if (!w) return;
-    
+
     // Unminimize
     if (w.classList.contains('minimized')) {
         w.classList.remove('minimized');
@@ -147,7 +147,50 @@ document.querySelectorAll('.window').forEach(w => {
     minBtn.onclick = (e) => { e.stopPropagation(); minimizeWindow(w.dataset.app); };
     const closeBtn = w.querySelector('.win-btn.close');
     closeBtn.onclick = (e) => { e.stopPropagation(); closeWindow(w.dataset.app); };
+
+    // Initialize Draggable
+    makeDraggable(w);
 });
+
+function makeDraggable(element) {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    const header = element.querySelector('.title-bar');
+
+    if (header) {
+        header.onmousedown = dragMouseDown;
+    }
+
+    function dragMouseDown(e) {
+        e.preventDefault();
+        // Get initial mouse position
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+
+        // Focus window on drag start
+        focusWindow(element.dataset.app);
+    }
+
+    function elementDrag(e) {
+        e.preventDefault();
+        // Calculate new position
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+
+        // Set new position
+        element.style.top = (element.offsetTop - pos2) + "px";
+        element.style.left = (element.offsetLeft - pos1) + "px";
+    }
+
+    function closeDragElement() {
+        // Stop moving when mouse button is released
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+}
 
 els.taskbarIcons.forEach(icon => {
     icon.onclick = () => {
@@ -241,7 +284,7 @@ function loadPage(url) {
     els.browser.viewport.innerHTML = Pages[url] || '<h1>404 Not Found</h1>';
     els.browser.urlBar.value = url;
     currentUrl = url;
-    
+
     // Update active link
     els.browser.links.forEach(l => l.classList.remove('active'));
     const link = Array.from(els.browser.links).find(l => l.dataset.url === url);
@@ -282,8 +325,8 @@ function startDecoding() {
     const interval = setInterval(() => {
         progress += 5;
         fill.style.width = `${progress}%`;
-        
-        if (Math.random() > 0.7) logs.innerHTML += `> Analyzing block ${Math.floor(Math.random()*99)}...<br>`;
+
+        if (Math.random() > 0.7) logs.innerHTML += `> Analyzing block ${Math.floor(Math.random() * 99)}...<br>`;
         logs.scrollTop = logs.scrollHeight;
 
         // TRIGGER MINIGAME at ~40%
@@ -301,7 +344,7 @@ function startDecoding() {
         if (progress >= 100) {
             clearInterval(interval);
             btn.disabled = false;
-            
+
             if (input === CONFIG.FULL_HASH) {
                 logs.innerHTML += `> SUCCESS. DECRYPTED.<br>`;
                 logs.innerHTML += `> CODE: <span style="color:white; font-weight:bold; user-select:text;">${CONFIG.DECODED_CODE}</span><br>`;
@@ -333,7 +376,7 @@ function triggerMinigame(onSuccess) {
             clearInterval(spawnLoop);
             return;
         }
-        
+
         spawnCircle();
         spawned++;
 
@@ -343,16 +386,16 @@ function triggerMinigame(onSuccess) {
         if (failed) return;
         const circle = document.createElement('div');
         circle.classList.add('defense-circle');
-        
+
         const size = Math.random() * (CONFIG.MINIGAME.CIRCLE_MAX_PX - CONFIG.MINIGAME.CIRCLE_MIN_PX) + CONFIG.MINIGAME.CIRCLE_MIN_PX;
         const x = Math.random() * (window.innerWidth - size - 160) + 80; // Padding
         const y = Math.random() * (window.innerHeight - size - 160) + 80;
-        
+
         circle.style.width = `${size}px`;
         circle.style.height = `${size}px`;
         circle.style.left = `${x}px`;
         circle.style.top = `${y}px`;
-        
+
         const ttl = Math.random() * (CONFIG.MINIGAME.TTL_MAX_MS - CONFIG.MINIGAME.TTL_MIN_MS) + CONFIG.MINIGAME.TTL_MIN_MS;
         circle.style.animationDuration = `${ttl}ms`;
 
