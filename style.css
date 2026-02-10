@@ -325,6 +325,12 @@ body {
 
 #browser-viewport * {
     user-select: text;
+    -webkit-user-select: text;
+    cursor: text;
+}
+
+#browser-viewport button,
+#browser-viewport input {
     cursor: auto;
 }
 
