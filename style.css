@@ -635,3 +635,31 @@ body {
         transform: translate3d(4px, 0, 0);
     }
 }
+
+/* --- BROWSER CONTENT STYLES --- */
+details {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: bold;
+    outline: none;
+}
+
+details[open] summary {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.news-feed {
+    background: #fff;
+    padding: 10px;
+    border-left: 4px solid #0078d4;
+    margin-bottom: 20px;
+}
