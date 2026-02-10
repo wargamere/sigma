@@ -330,15 +330,21 @@ function startDecoding() {
         logs.scrollTop = logs.scrollHeight;
 
         // TRIGGER MINIGAME at ~40%
-        if (!State.hasBeenHacked && progress > 35 && progress < 45 && Math.random() < CONFIG.HACK_CHANCE) {
-            clearInterval(interval);
-            triggerMinigame(() => {
-                // On success resume
-                State.hasBeenHacked = true;
-                btn.disabled = false;
-                startDecoding(); // Restart/Resume logic (simplified to restart decode for UI cleaness)
-            });
-            return;
+        // Always trigger if not yet hacked (user requirement: reliable trigger)
+        // Or small chance if already hacked
+        if (progress > 35 && progress < 45) {
+            const shouldTrigger = !State.hasBeenHacked || Math.random() < 0.2;
+
+            if (shouldTrigger) {
+                clearInterval(interval);
+                triggerMinigame(() => {
+                    // On success resume
+                    State.hasBeenHacked = true;
+                    btn.disabled = false;
+                    startDecoding(); // Restart/Resume logic
+                });
+                return;
+            }
         }
 
         if (progress >= 100) {
@@ -358,6 +364,17 @@ function startDecoding() {
         }
     }, CONFIG.DECODE_TIME_MS / 20);
 }
+
+// Background Hack Timer (Every 2 minutes)
+setInterval(() => {
+    if (!State.minigameActive && !State.apps.verify.isWon) {
+        // Only trigger if game is not won and minigame not active
+        triggerMinigame(() => {
+            State.hasBeenHacked = true;
+            // Just close overlay and continue
+        });
+    }
+}, 120000); // 2 minutes
 
 function triggerMinigame(onSuccess) {
     State.minigameActive = true;
