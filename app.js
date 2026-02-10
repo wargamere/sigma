@@ -12,12 +12,12 @@ const CONFIG = {
     MINIGAME: {
         TOTAL_CIRCLES: 10,
         TARGET_WINS: 10,
-        SPAWN_MIN_MS: 400,
-        SPAWN_MAX_MS: 700,
-        TTL_MIN_MS: 1000,
-        TTL_MAX_MS: 1500,
-        CIRCLE_MIN_PX: 50,
-        CIRCLE_MAX_PX: 80,
+        SPAWN_MIN_MS: 1000,
+        SPAWN_MAX_MS: 1000,
+        TTL_MIN_MS: 2500,
+        TTL_MAX_MS: 3500,
+        CIRCLE_MIN_PX: 60,
+        CIRCLE_MAX_PX: 90,
     },
     DECODE_TIME_MS: 4000,
     HACK_CHANCE: 0.7
