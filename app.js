@@ -436,7 +436,7 @@ function triggerMinigame(onSuccess) {
 
         const size = Math.random() * (CONFIG.MINIGAME.CIRCLE_MAX_PX - CONFIG.MINIGAME.CIRCLE_MIN_PX) + CONFIG.MINIGAME.CIRCLE_MIN_PX;
 
-        const size = Math.random() * (CONFIG.MINIGAME.CIRCLE_MAX_PX - CONFIG.MINIGAME.CIRCLE_MIN_PX) + CONFIG.MINIGAME.CIRCLE_MIN_PX;
+
 
         // Use simplified percentage-based positioning to guarantee no corner/edge spawns.
         // Spawns between 15% and 80% of the screen dimensions.
