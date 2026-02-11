@@ -41,6 +41,14 @@
 
         <!-- WORKSPACE AREA -->
         <div id="workspace">
+            <!-- DESKTOP ICONS -->
+            <div id="desktop-icons">
+                <div class="desktop-icon" data-target="pdf-viewer">
+                    <span class="icon">📄</span>
+                    <span class="label">How to Play.pdf</span>
+                </div>
+            </div>
+
             <!-- APP WINDOWS -->
 
             <!-- BROWSER -->
@@ -115,6 +123,49 @@
                         </div>
                         <button id="verify-btn" class="primary-btn">VERIFY IDENTITY</button>
                         <div id="verify-msg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PDF VIEWER -->
+            <div id="window-pdf-viewer" class="window minimized" data-app="pdf-viewer">
+                <div class="title-bar">
+                    <div class="window-title">How to Play.pdf - PDF Viewer</div>
+                    <div class="window-controls">
+                        <button class="win-btn min">–</button>
+                        <button class="win-btn close">×</button>
+                    </div>
+                </div>
+                <div class="window-content">
+                    <div class="pdf-container">
+                        <div class="pdf-page">
+                            <h1>SIGMA OS - OPERATOR MANUAL</h1>
+                            <hr>
+                            <h2>1. INTRODUCTION</h2>
+                            <p>Welcome, Operator. Your mission is to restore system integrity. The system has been
+                                fragmented into hashes.</p>
+
+                            <h2>2. TOOLS</h2>
+                            <ul>
+                                <li><strong>Browser (Glob):</strong> Explore local Intranet pages to find hidden hash
+                                    fragments. Look for clues in comments, footers, and archived data.</li>
+                                <li><strong>Notes (Scratchpad):</strong> Use this to assemble fragments you find.</li>
+                                <li><strong>Decoder (Hash Tool):</strong> Once you have the full 32-character hash,
+                                    enter it here to start the decryption process.</li>
+                                <li><strong>Verify (System):</strong> The final step. Enter the decrypted protocol key
+                                    here to win.</li>
+                            </ul>
+
+                            <h2>3. SECURITY ALERTS</h2>
+                            <p><strong>WARNING:</strong> Decryption triggers active countermeasures. You will be
+                                attacked by the system's firewall.</p>
+                            <p><strong>DEFENSE:</strong> Click the red defense nodes before they shrink to 0. If you
+                                miss too many, the system reboots.</p>
+
+                            <h2>4. HINTS</h2>
+                            <p>- Fragment A is often found in build artifacts.</p>
+                            <p>- Fragment B is usually hidden in legacy or admin documentation.</p>
+                        </div>
                     </div>
                 </div>
             </div>

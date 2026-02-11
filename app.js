@@ -34,7 +34,9 @@ const State = {
     apps: {
         browser: { isOpen: false, zIndex: 10 },
         notes: { isOpen: false, zIndex: 11 },
-        verify: { isOpen: false, zIndex: 12 }
+        notes: { isOpen: false, zIndex: 11 },
+        verify: { isOpen: false, zIndex: 12 },
+        'pdf-viewer': { isOpen: false, zIndex: 13 }
     },
     zIndexCounter: 20,
     hasBeenHacked: false, // Track if player has beaten the minigame once
@@ -219,6 +221,25 @@ els.taskbarIcons.forEach(icon => {
             }
         }
     };
+});
+
+// --- DESKTOP ICONS ---
+document.querySelectorAll('.desktop-icon').forEach(icon => {
+    icon.ondblclick = () => {
+        const target = icon.dataset.target;
+        focusWindow(target);
+    };
+    // Also support single click to select (visual only for now)
+    icon.onclick = (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('.desktop-icon').forEach(i => i.style.background = 'transparent');
+        icon.style.background = 'rgba(255, 255, 255, 0.1)';
+    };
+});
+
+// click anywhere else to deselect
+document.getElementById('workspace').addEventListener('click', () => {
+    document.querySelectorAll('.desktop-icon').forEach(i => i.style.background = 'transparent');
 });
 
 // --- CLOCK ---
